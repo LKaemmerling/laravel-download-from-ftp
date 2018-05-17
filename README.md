@@ -1,6 +1,7 @@
-## Laravel Sample FTP Download
+# Laravel Sample FTP Download
 
-###Setup:
+## Setup:
+**Don't forget to run composer install!**
 
 Edit Disk Config under /config/filesystems.php
 
