@@ -64,10 +64,7 @@ return [
             'url' => env('AWS_URL'),
         ],
         'ftp' => [
-            'driver' => 'ftp',
-            'host' => 'INSERT_HOST_HERE',
-            'username' => 'INSERT_USR_HERE',
-            'password' => 'INSERT_PASS_HERE',
+            
         ],
     ],
 
