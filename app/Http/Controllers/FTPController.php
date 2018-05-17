@@ -7,16 +7,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ *
+ */
 class FTPController extends Controller
 {
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function list_folders()
     {
         return view('list_folders');
     }
 
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function api_list_folders()
     {
+        // You should cache the response from the ftp, since the connection to the ftp server could need some time.
         if (Cache::has('files')) {
             $resp = Cache::get('files');
         } else {
@@ -26,6 +36,11 @@ class FTPController extends Controller
         return response()->json($resp);
     }
 
+    /**
+     * @param $file
+     *
+     * @return mixed
+     */
     public function download_file($file)
     {
         $files = Cache::get('files');
