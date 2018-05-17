@@ -48,8 +48,10 @@ class FTPController extends Controller
         if (Cache::has('files')) {
             $array = Cache::get('files');
         } else {
-            $resp = collect(Storage::disk('ftp')->allFiles())->map(function ($r) use (&$array) {
-                return self::set_array_per_slash_notation($array, ltrim($r), $r);
+            $files = Storage::disk('ftp')->allFiles();
+            Cache::put('__files', $files, 5);
+            $resp = collect($files)->map(function ($r, $index) use (&$array) {
+                return self::set_array_per_slash_notation($array, ltrim($r), $index);
             });
             Cache::put('files', $array, 5);
         }
@@ -74,7 +76,8 @@ class FTPController extends Controller
         }
 
         $keys = explode('/', $key);
-        if (starts_with($value, '/')) {
+
+        if (strlen($keys[0]) == 0) {
             array_shift($keys);
         }
         while (count($keys) > 1) {
@@ -100,9 +103,9 @@ class FTPController extends Controller
      *
      * @return mixed
      */
-    public function download_file($dir, $file)
+    public function download_file($file)
     {
-        $files = Cache::get('files');
+        $files = Cache::get('__files');
 
         return Storage::disk('ftp')->download($files[$file]);
     }

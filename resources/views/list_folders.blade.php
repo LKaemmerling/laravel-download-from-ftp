@@ -30,13 +30,13 @@
         function recurse(key, val, collapse = true, first = false) {
             list += "<li class='list-group-item collapse " + (collapse ? 'in' : 'out') + " " + (first ? '' : 'clicked') + "'>";
             if (val instanceof Object) {
-                list += "<span onclick=toggleChildren(this)>" + key + "</span>" + "<ul class='list-group out parent'>";
+                list += "<span onclick=toggleChildren(this)><i class='fas fa-caret-down'></i> " + key + "</span>" + "<ul class='list-group out parent'>";
                 $.each(val, function (_key, _val) {
                     recurse(_key, _val, false)
                 });
                 list += "</ul>";
             } else {
-                list += "<a href='" + val + "'>" + key + "</a>";
+                list += "<span>" + key + "</span> <a href='/download/"+val+"'><i class='pull-right fas fa-download'></i></a>";
             }
             list += "</li>";
         }
