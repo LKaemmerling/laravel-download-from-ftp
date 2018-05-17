@@ -16,3 +16,4 @@ Route::get('/', function () {
 });
 Route::get('/ftp', 'FTPController@list_folders');
 Route::get('/download/{file}', 'FTPController@download_file');
+Route::get('/files', 'FTPController@api_list_folders');
