@@ -82,7 +82,7 @@ class FTPController extends Controller
         }
 
         $keys = explode('/', $key);
-
+        
         if (strlen($keys[0]) == 0) {
             array_shift($keys);
         }
