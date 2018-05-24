@@ -16,6 +16,12 @@ class FTPController extends Controller
 {
 
     /**
+     * Cache Time in Minutes
+     * @var int
+     */
+    protected static $cache_time = 360;
+
+    /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function list_folders()
@@ -49,11 +55,11 @@ class FTPController extends Controller
             $array = Cache::get('files');
         } else {
             $files = Storage::disk('ftp')->allFiles();
-            Cache::put('__files', $files, 5);
+            Cache::put('__files', $files, self::$cache_time);
             $resp = collect($files)->map(function ($r, $index) use (&$array) {
                 return self::set_array_per_slash_notation($array, ltrim($r), $index);
             });
-            Cache::put('files', $array, 5);
+            Cache::put('files', $array, self::$cache_time);
         }
 
         return response()->json($array);
